@@ -1,35 +1,34 @@
-import React, { useEffect} from 'react'
-import { useDispatch } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { AppDispatch } from '../../app/store';
-import { selectPosts, fetchPostsAsync, Statuses, selectStatus } from './PostSlice'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from 'react'
 
-function Post() {
-    const posts = useAppSelector(selectPosts);
-    const status = useAppSelector(selectStatus)
-    const dispatch = useDispatch<AppDispatch>();
+function Post(props:any) {
+  const [title, setTitle] = useState(props.post.title);
+  const [body, setBody] = useState(props.post.body);
 
-    useEffect(() => {
-        dispatch(fetchPostsAsync());
-    }, [dispatch])
+  const titleElement = <h2 className="title text-start">{props.post.title}</h2>;
+  const bodyElement = <p className="card-text text-start">{props.post.body}</p>;
 
-    let contents;
-    if (status != Statuses.UpToDate){
-        contents = <div> {status} </div>
-    }else {
-        contents =
-        <div className='card'>
-            <h3>{status}</h3>
-            {/** form goes here */}
-            {posts && posts.length > 0 && posts.map(post => {
-                return <div key={post.id} style={{margin: "5em"}}>
-                <h3>{post.title}</h3>
-                </div>
-            })}
-        </div>
-    }
   return (
     <div>
+      <div className="row">
+        <div className='col-8'>
+          {titleElement}
+        </div>
+        <div className="col-4">
+          {/** Button group */}
+        </div>
+
+      </div>
+      <div className='row'>
+        <div className="col-8">
+          {bodyElement}
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-2'>
+          {/** edit button */}
+          </div>
+      </div>
     </div>
   )
 }
